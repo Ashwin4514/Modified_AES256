@@ -1,14 +1,16 @@
 `timescale 1ns / 1ps
 
-module subBytes(in,out, threshold);
+module subBytes(in,out,sbox_seed,round_num);
 input [127:0] in;
+input [255:0] sbox_seed;
+input [31:0] round_num;
 output [127:0] out;
-output [127:0] threshold;
 
-genvar i;
-generate 
-for(i=0;i<128;i=i+8) begin :sub_Bytes 
-	sbox s(in[i +:8],out[i +:8],threshold[i +:8]);
-	end
-endgenerate       
+sbox s(.a(in),.c(out),.sbox_seed(sbox_seed),.round_num(round_num));
+
+ initial begin
+ #1;
+  $display("In Encryption, Round Number: %d, Generated Output: %h", round_num, out);
+ end
+
 endmodule

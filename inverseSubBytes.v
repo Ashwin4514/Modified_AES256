@@ -23,14 +23,14 @@
 module inverseSubBytes(
   input [127:0] in,
   output [127:0] out,
-  input [127:0] threshold
+  input [255:0] sbox_seed,
+  input [31:0] round_num 
 );
 
-genvar i;
-generate 
-for(i=0;i<128;i=i+8) begin :sub_Bytes 
-	invSbox s(in[i +:8],out[i +:8]);
-	end
-endgenerate
+invSbox s(in,out,sbox_seed, round_num);
 
+ initial begin
+ #1
+  $display("In Decryption, Round Number: %d, Generated Output: %h", round_num, out);
+ end
 endmodule
