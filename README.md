@@ -1,7 +1,3 @@
-Certainly! Let's enhance your **README** by including the **MixColumns** and **InverseMixColumns** steps in both the encryption and decryption processes. I'll update the sections that describe the transformations to include this detail, especially highlighting how **MixColumns** and **InverseMixColumns** fit into the AES transformations.
-
----
-
 # AES-256 Modification with Dynamic SBox and Custom PRNG
 
 ## **Overview**
