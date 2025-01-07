@@ -7,10 +7,13 @@ input [127:0] key;
 
 wire [127:0] SBRO; //Shift Row Output
 wire [127:0] SBO; //Sub Bytes Output
+wire [127:0] SBCO;
 
 
 subBytes s(in,SBO,sbox_seed,round_num);
 shiftRows r(SBO,SBRO);
-addRoundKey b(SBRO,out,key);
+mixcolumns cols(SBRO,SBCO);
+addRoundKey b(SBCO,out,key);
+
 		
 endmodule

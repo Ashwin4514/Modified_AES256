@@ -10,7 +10,7 @@ decryption c(in,key,out,sbox_seed);
 
 initial begin
 
-in=128'hbdcf811884634ef5e9234239eaab81e7;
+in=128'hc21bd6808b2e6508def33538894c31b2;
 key=256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
 sbox_seed=256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
 $monitor("Inside Decryptor Testbench: in256= %h, key256= %h ,out256= %h",in,key,out);
