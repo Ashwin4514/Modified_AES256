@@ -109,7 +109,7 @@ The last round (round 14) skips **InverseMixColumns** and performs the following
 
 ## **Future Enhancements**
 
-- Integration of UVM and proper test benches to test it against benchmarks effectively.
+- Integration of UVM to test it against benchmarks effectively. [Work in Progress. Check: https://www.edaplayground.com/x/nrL6]
 - Optimizations for FPGA and ASIC implementations.
 - Exploration of hybrid cryptographic techniques by combining AES with other ciphers.
 
