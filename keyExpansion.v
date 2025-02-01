@@ -8,7 +8,7 @@ reg [0:31] temp;
 reg [0:31] r;
 reg [0:31] subReturn; //Return from RinjDahl LUT.
 reg [0:31] rconv; 
-reg [0:31] new;
+reg [0:31] neww;
 
 integer i;
 
@@ -26,9 +26,9 @@ always@* begin
 	else if(numkeys >6 && i % numkeys == 4) begin
 		temp = rinjdahlLUT(temp);
 	end
-	new = (expandedKey[(128*(numRounds+1)-(numkeys*32))+:32] ^ temp);
+	neww = (expandedKey[(128*(numRounds+1)-(numkeys*32))+:32] ^ temp);
 	expandedKey = expandedKey << 32;
-	expandedKey = {expandedKey[0 : (128 * (numRounds + 1) - 32) - 1], new};
+      expandedKey = {expandedKey[0 : (128 * (numRounds + 1) - 32) - 1],neww};
 end
 
 end

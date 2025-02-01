@@ -1,9 +1,20 @@
-module decryption #(parameter N=256,parameter NumRounds=14,parameter Numkeys=8)(in,key,out,sbox_seed);
-input [127:0] in;
-input [N-1:0] key;
-output [127:0] out;
-input [N-1:0] sbox_seed;
+`include "invSbox.v"
+`include "inverseSubBytes.v"
+`include "invShiftRows.v"
+`include "invMixColumns.v"
+`include "decryptEachRound.v"
 
+module decryption 
+  #(parameter N=256,parameter NumRounds=14,parameter Numkeys=8)(
+    input clk,
+    input rst,
+    input  wire [127:0] in,
+    input  wire [N-1:0] key,
+    output wire [127:0] out,
+	input  wire [N-1:0] sbox_seed
+  );
+  
+  reg [127:0] out_reg;
 
 wire [(128*(NumRounds+1))-1 :0] expandedkeys;
 wire [127:0] ShiftRowsOut;
@@ -31,7 +42,12 @@ endgenerate
     inverseShiftRows sr(MixColsOut,ShiftRowsOut);
     inverseSubBytes sb(ShiftRowsOut,SubBytesOut,sbox_seed,1);
     addRoundKey addrk2(SubBytesOut,stages[NumRounds],expandedkeys[((128*(NumRounds+1))-1)-:128]);
+  
+  always@(posedge clk) begin
+    if(rst) out_reg <= 0;
+    else out_reg <= stages[NumRounds];
+  end
         
-assign out=stages[NumRounds];
+assign out=out_reg;
 
 endmodule

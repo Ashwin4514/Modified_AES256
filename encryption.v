@@ -1,8 +1,19 @@
+`include "sbox.v"
+`include "SubBytes.v"
+`include "shiftRows.v"
+`include "mixcolumns.v"
+`include "encryptEachRound.v"
+
+
 module encryption #(parameter N=256,parameter Numkeys=8,parameter NumRounds=14)
-                (input [127:0] in,
-                 input [N-1:0] key,
-                 input [N-1:0] sbox_seed,
-                 output [127:0] out);
+  (input clk,
+   input rst,
+   input wire  [127:0] in,
+   input wire  [N-1:0] key,
+   input wire  [N-1:0] sbox_seed,
+   output wire  [127:0] out);
+  
+  reg[127:0] out_reg;
 
 
 wire [(128*(NumRounds+1))-1 :0] expandedkeys;
@@ -37,6 +48,11 @@ generate
     end
     endgenerate 
   
-  assign out=stages[NumRounds];
+  always@(posedge clk) begin
+    if(rst) out_reg <= 0;
+    else out_reg <= stages[NumRounds];
+  end
+  
+  assign out = out_reg;
     
 endmodule
